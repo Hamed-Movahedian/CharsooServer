@@ -85,46 +85,6 @@ namespace CharsooWebAPI.Controllers
 
         #endregion
 
-        #region ConnectToAccount
-
-        [ResponseType(typeof(string)), HttpPost, Route("ConnectToAccount")]
-        public IHttpActionResult ConnectToAccount(string phoneNumber, DateTime lastCommandTime)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            // increase client last command time
-            lastCommandTime = lastCommandTime.AddMilliseconds(999);
-
-            // Create command array
-            JArray commands = new JArray();
-
-            // Get players with this phoneNumber
-            var players = _db.PlayerInfoes
-                 .Where(pi => pi.Telephone == phoneNumber)
-                 .ToList();
-
-            // if no player exist => FAIL
-            if (players.Count == 0)
-                return Ok("Fail");
-
-            // Add update player info command
-            commands.Add(new JObject
-            {
-                ["Command"] = "UpdatePlayerInfo",
-                ["Data"] = JObject.FromObject(players[0])
-            });
-            
-            string content = commands.ToString(Formatting.None);
-
-            return Ok(content);
-        }
-
-
-        #endregion
-
         #region Tools
 
         protected override void Dispose(bool disposing)

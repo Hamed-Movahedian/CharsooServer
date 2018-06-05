@@ -119,6 +119,7 @@
     <Compile Include="Controllers\PlayerInfoController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\PuzzlesController.cs" />
+    <Compile Include="Services\SmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

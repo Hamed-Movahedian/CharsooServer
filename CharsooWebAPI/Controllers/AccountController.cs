@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CharsooWebAPI.Models;
+using CharsooWebAPI.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -14,8 +15,6 @@ namespace CharsooWebAPI.Controllers
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
-        private readonly charsoog_DBEntities _db = new charsoog_DBEntities();
-
         #region SendSms
 
         [ResponseType(typeof(string)), HttpPost, Route("SendSms")]
@@ -35,19 +34,22 @@ namespace CharsooWebAPI.Controllers
             if (players.Count == 0)
                 return Ok("NotRegister");
 
-            // check phone first char for TEST
-            if (phoneNumber[0] == '0')
-                return Ok("NoSmsService");
+            // Send sms and get result ( OK or InvalidPhoneNumber of NoSmsService )
+            var result = SmsService.CallSmsService(
+                phoneNumber,
+                $"سلام دوست عزیز به چهارسو خوش آمدید\nکد فعال سازی شما : {code}");
 
-            return Ok("OK");
+            return Ok(result);
         }
+
+
 
         #endregion
 
         #region ConnectToAccount
 
-        [ResponseType(typeof(string)), HttpPost, Route("ConnectToAccount")]
-        public IHttpActionResult ConnectToAccount(string phoneNumber, string code)
+        [ResponseType(typeof(PlayerInfo)), HttpPost, Route("ConnectToAccount")]
+        public IHttpActionResult ConnectToAccount(string phoneNumber)
         {
             if (!ModelState.IsValid)
             {
@@ -61,19 +63,17 @@ namespace CharsooWebAPI.Controllers
 
             // phone number not registered !!!!
             if (players.Count == 0)
-                return Ok("NotRegister");
+                return NotFound();
 
-            // check phone first char for TEST
-            if (phoneNumber[0] == '0')
-                return Ok("NoSmsService");
-
-            return Ok("OK");
+            return Ok(players[0]);
         }
 
 
         #endregion
 
-        #region Tools
+        #region Database Access
+
+        private readonly charsoog_DBEntities _db = new charsoog_DBEntities();
 
         protected override void Dispose(bool disposing)
         {
