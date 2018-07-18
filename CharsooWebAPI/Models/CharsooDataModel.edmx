@@ -78,6 +78,9 @@
           <Property Name="Paid" Type="bit" Nullable="false" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="CreatorID" Type="int" />
+          <Property Name="Rate" Type="int" />
+          <Property Name="PlayCount" Type="int" />
         </EntityType>
         <Association Name="FK_CategoryParent">
           <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
@@ -256,6 +259,9 @@
           <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Self.FK_CategoryPuzzle" FromRole="Puzzles" ToRole="Categories" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
           <NavigationProperty Name="PlayerPuzzles" Relationship="Self.FK_PuzzlePlayerPuzzle" FromRole="Puzzles" ToRole="PlayerPuzzles" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <Property Name="CreatorID" Type="Int32" />
+          <Property Name="Rate" Type="Int32" />
+          <Property Name="PlayCount" Type="Int32" />
         </EntityType>
         <Association Name="FK_CategoryParent">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -454,6 +460,9 @@
           <EntitySetMapping Name="Puzzles">
             <EntityTypeMapping TypeName="CharsooModels.Puzzle">
               <MappingFragment StoreEntitySet="Puzzles">
+                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Clue" ColumnName="Clue" />
                 <ScalarProperty Name="Content" ColumnName="Content" />

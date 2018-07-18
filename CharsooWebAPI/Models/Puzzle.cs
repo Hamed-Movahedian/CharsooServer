@@ -28,6 +28,9 @@ namespace CharsooWebAPI.Models
         public bool Paid { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public System.DateTime LastUpdate { get; set; }
+        public Nullable<int> CreatorID { get; set; }
+        public Nullable<int> Rate { get; set; }
+        public Nullable<int> PlayCount { get; set; }
     
         internal virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
