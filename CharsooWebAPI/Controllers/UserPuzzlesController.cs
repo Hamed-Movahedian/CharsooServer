@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -24,54 +25,84 @@ namespace CharsooWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var outData = new OutData
+            var outData = new OutData();
+
+            outData.LastUpdate = DateTime.Now;
+
+            #region Register new puzzles
+
+            outData.NewPuzzles = new List<OutData.NewPuzzle>();
+
+            foreach (var cPuzzle in inData.NewPuzzles)
             {
-                LastUpdate = DateTime.Now,
-                NewPuzzles = AddNewPuzzles(inData),
-                UpdatedPuzzles = GetUpdatedPuzzles(inData)
-            };
+                // Check if new puzzle already exist?
+                UserPuzzle existingRecord;
 
-            return Ok(outData);
-        }
+                try
+                {
+                    existingRecord = _db.UserPuzzles
+                        .FirstOrDefault(p => p.CreatorID == inData.PlayerID && p.ClientID == cPuzzle.ID);
+                }
+                catch (Exception e)
+                {
+                    return InternalServerError(e);
+                }
+                if (existingRecord != null)
+                {
+                    // new puzzle already exist
+                    existingRecord.Clue = cPuzzle.Clue;
+                    existingRecord.Content = cPuzzle.Content;
 
-        private List<OutData.PuzzleUpdate> GetUpdatedPuzzles(InData inData)
-        {
-            var results = new List<OutData.PuzzleUpdate>();
+                    _db.Entry(existingRecord).State = EntityState.Modified;
 
-            _db.Puzzles
+                    _db.SaveChanges();
+
+                    outData.NewPuzzles.Add(new OutData.NewPuzzle { ID = cPuzzle.ID, ServerID = existingRecord.ID });
+                }
+                else
+                {
+                    // new puzzle not exist and must be added
+                    var sPuzzle = new UserPuzzle
+                    {
+                        ClientID = cPuzzle.ID,
+                        CreatorID = inData.PlayerID,
+                        Clue = cPuzzle.Clue,
+                        Content = cPuzzle.Content,
+                        LastUpdate = DateTime.Now
+                    };
+                    sPuzzle = _db.UserPuzzles.Add(sPuzzle);
+
+                    _db.SaveChanges();
+
+                    outData.NewPuzzles.Add(new OutData.NewPuzzle { ID = cPuzzle.ID, ServerID = sPuzzle.ID });
+                }
+            }
+
+
+            #endregion
+
+            #region Get Recent Updates
+
+            outData.UpdatedPuzzles = new List<OutData.PuzzleUpdate>();
+
+            _db.UserPuzzles
                 .Where(p => p.CreatorID == inData.PlayerID && p.LastUpdate > inData.LastUpdate)
                 .ToList()
                 .ForEach(
-                    p => results.Add(new OutData.PuzzleUpdate
+                    p => outData.UpdatedPuzzles.Add(new OutData.PuzzleUpdate
                     {
                         ServerID = p.ID,
-                        CategoryName = p.Category.Name,
+                        CategoryName = p.Category?.Name,
                         Rate = p.Rate,
                         PlayCount = p.PlayCount
                     }));
 
-            return results;
+            #endregion
+
+            return Ok(outData);
         }
-
-        private List<OutData.NewPuzzle> AddNewPuzzles(InData inData)
-        {
-            var newPuzzles = new List<OutData.NewPuzzle>();
-
-            foreach (var cPuzzle in inData.NewPuzzles)
-            {
-                var sPuzzle = new Puzzle()
-                {
-                    Clue = cPuzzle.Clue,
-                    Content = cPuzzle.Content,
-                    CreatorID = inData.PlayerID,
-                    LastUpdate = DateTime.Now
-                };
-                sPuzzle = _db.Puzzles.Add(sPuzzle);
-                newPuzzles.Add(new OutData.NewPuzzle { ID = cPuzzle.ID, ServerID = sPuzzle.ID });
-            }
-
-            return newPuzzles;
-        }
+        
+        #region InData & OutData classes
 
         public class OutData
         {
@@ -107,6 +138,9 @@ namespace CharsooWebAPI.Controllers
                 public int ID { get; set; }
             }
         }
+        
+
+        #endregion
 
         #region DB
 

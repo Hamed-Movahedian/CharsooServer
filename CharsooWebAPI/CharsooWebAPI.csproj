@@ -121,6 +121,9 @@
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\PuzzlesController.cs" />
     <Compile Include="Controllers\UserPuzzlesController.cs" />
+    <Compile Include="Models\UserPuzzle.cs">
+      <DependentUpon>CharsooDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Services\SmsService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

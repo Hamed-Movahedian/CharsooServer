@@ -18,6 +18,8 @@
         <AssociationConnector Association="CharsooModels.FK_LogIn_PlayerInfo" />
         <EntityTypeShape EntityType="CharsooModels.Purchase" Width="1.5" PointX="8" PointY="5.25" />
         <AssociationConnector Association="CharsooModels.FK_Purchases_PlayerInfo" />
+        <EntityTypeShape EntityType="CharsooModels.UserPuzzle" Width="1.5" PointX="0.75" PointY="5.75" />
+        <AssociationConnector Association="CharsooModels.FK_CategoryUserPuzzle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

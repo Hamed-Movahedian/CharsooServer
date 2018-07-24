@@ -20,6 +20,7 @@ namespace CharsooWebAPI.Models
             this.children = new HashSet<Category>();
             this.DependentCategories = new HashSet<Category>();
             this.Puzzles = new HashSet<Puzzle>();
+            this.UserPuzzles = new HashSet<UserPuzzle>();
         }
     
         public int ID { get; set; }
@@ -40,5 +41,7 @@ namespace CharsooWebAPI.Models
         internal virtual Category PrerequisitCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         internal virtual ICollection<Puzzle> Puzzles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserPuzzle> UserPuzzles { get; set; }
     }
 }
