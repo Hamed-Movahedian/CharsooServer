@@ -18,7 +18,7 @@ namespace CharsooWebAPI.Controllers
     {
 
         [ResponseType(typeof(OutData)), HttpPost, Route("Sync")]
-        public IHttpActionResult GetRecentCommands(InData inData)
+        public IHttpActionResult Sync(InData inData)
         {
             if (!ModelState.IsValid)
             {
@@ -30,8 +30,6 @@ namespace CharsooWebAPI.Controllers
             outData.LastUpdate = DateTime.Now;
 
             #region Register new puzzles
-
-            outData.NewPuzzles = new List<OutData.NewPuzzle>();
 
             foreach (var cPuzzle in inData.NewPuzzles)
             {
@@ -47,17 +45,17 @@ namespace CharsooWebAPI.Controllers
                 {
                     return InternalServerError(e);
                 }
+
                 if (existingRecord != null)
                 {
                     // new puzzle already exist
                     existingRecord.Clue = cPuzzle.Clue;
                     existingRecord.Content = cPuzzle.Content;
+                    existingRecord.LastUpdate= DateTime.Now;
 
                     _db.Entry(existingRecord).State = EntityState.Modified;
 
                     _db.SaveChanges();
-
-                    outData.NewPuzzles.Add(new OutData.NewPuzzle { ID = cPuzzle.ID, ServerID = existingRecord.ID });
                 }
                 else
                 {
@@ -70,11 +68,9 @@ namespace CharsooWebAPI.Controllers
                         Content = cPuzzle.Content,
                         LastUpdate = DateTime.Now
                     };
-                    sPuzzle = _db.UserPuzzles.Add(sPuzzle);
+                    _db.UserPuzzles.Add(sPuzzle);
 
                     _db.SaveChanges();
-
-                    outData.NewPuzzles.Add(new OutData.NewPuzzle { ID = cPuzzle.ID, ServerID = sPuzzle.ID });
                 }
             }
 
@@ -85,16 +81,21 @@ namespace CharsooWebAPI.Controllers
 
             outData.UpdatedPuzzles = new List<OutData.PuzzleUpdate>();
 
-            _db.UserPuzzles
-                .Where(p => p.CreatorID == inData.PlayerID && p.LastUpdate > inData.LastUpdate)
-                .ToList()
-                .ForEach(
+            var userPuzzles = _db.UserPuzzles.ToList();
+
+            var filteredPuzzles = userPuzzles.Where(p => p.CreatorID == inData.PlayerID && p.LastUpdate > inData.LastUpdate)
+                .ToList();
+
+            filteredPuzzles.ForEach(
                     p => outData.UpdatedPuzzles.Add(new OutData.PuzzleUpdate
                     {
                         ServerID = p.ID,
                         CategoryName = p.Category?.Name,
                         Rate = p.Rate,
-                        PlayCount = p.PlayCount
+                        PlayCount = p.PlayCount,
+                        Content = p.Content,
+                        Clue = p.Clue,
+                        ID = p.ClientID
                     }));
 
             #endregion
@@ -107,7 +108,6 @@ namespace CharsooWebAPI.Controllers
         public class OutData
         {
             public DateTime LastUpdate { get; set; }
-            public List<NewPuzzle> NewPuzzles { get; set; }
             public List<PuzzleUpdate> UpdatedPuzzles { get; set; }
 
             public class PuzzleUpdate
@@ -116,11 +116,8 @@ namespace CharsooWebAPI.Controllers
                 public string CategoryName { get; set; }
                 public int? Rate { get; set; }
                 public int? PlayCount { get; set; }
-            }
-
-            public class NewPuzzle
-            {
-                public int ServerID { get; set; }
+                public string Content { get; set; }
+                public string Clue { get; set; }
                 public int ID { get; set; }
             }
         }
