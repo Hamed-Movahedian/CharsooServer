@@ -97,7 +97,7 @@ namespace CharsooWebAPI.Controllers
 
         // POST: api/Puzzles
         [ResponseType(typeof(Puzzle)), HttpPost, Route("Create")]
-        public async Task<IHttpActionResult> CreatePuzzle(Puzzle puzzle)
+        public IHttpActionResult CreatePuzzle(Puzzle puzzle)
         {
             if (!ModelState.IsValid)
             {
@@ -106,9 +106,9 @@ namespace CharsooWebAPI.Controllers
 
             puzzle.LastUpdate = DateTime.Now;
             db.Puzzles.Add(puzzle);
-            await db.SaveChangesAsync();
+            db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = puzzle.ID }, puzzle);
+            return Ok(puzzle);
         }
 
         #endregion
@@ -129,22 +129,7 @@ namespace CharsooWebAPI.Controllers
             puzzle.CategoryID = null;
 
             db.Entry(puzzle).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PuzzleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            db.SaveChanges();
 
             return Ok(puzzle);
         }

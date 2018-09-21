@@ -24,6 +24,6 @@ namespace CharsooWebAPI.Models
         public Nullable<int> Rate { get; set; }
         public Nullable<int> PlayCount { get; set; }
     
-        public virtual Category Category { get; set; }
+        internal virtual Category Category { get; set; }
     }
 }

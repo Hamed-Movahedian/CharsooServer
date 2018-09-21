@@ -471,7 +471,7 @@
           <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Rate" Type="Int32" />
           <Property Name="PlayCount" Type="Int32" />
-          <NavigationProperty Name="Category" Relationship="CharsooModels.FK_CategoryUserPuzzle" FromRole="UserPuzzle" ToRole="Category" />
+          <NavigationProperty Name="Category" Relationship="CharsooModels.FK_CategoryUserPuzzle" FromRole="UserPuzzle" ToRole="Category" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
         </EntityType>
         <Association Name="FK_CategoryUserPuzzle">
           <End Type="CharsooModels.Category" Role="Category" Multiplicity="0..1" />

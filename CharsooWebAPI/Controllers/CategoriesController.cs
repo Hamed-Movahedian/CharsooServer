@@ -20,9 +20,11 @@ namespace CharsooWebAPI.Controllers
         #region GET
 
         // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        [ResponseType(typeof(List<Category>))]
+        public IHttpActionResult GetCategories()
         {
-            return db.Categories;
+            var categories = db.Categories.ToList();
+            return Ok(categories);
         }
 
         // GET: api/Categories
@@ -108,7 +110,8 @@ namespace CharsooWebAPI.Controllers
             db.Categories.Add(category);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = category.ID }, category);
+            //return CreatedAtRoute("DefaultApi", new { id = category.ID }, category);
+            return Ok(category);
         }
 
         #endregion
