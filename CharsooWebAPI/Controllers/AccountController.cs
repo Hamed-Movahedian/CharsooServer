@@ -32,7 +32,7 @@ namespace CharsooWebAPI.Controllers
 
             // phone number not registered !!!!
             if (players.Count == 0)
-                return Ok("NotRegister");
+                return Ok("Not Register");
 
             // Send sms and get result ( OK or InvalidPhoneNumber of NoSmsService )
             var result = SmsService.CallSmsService(

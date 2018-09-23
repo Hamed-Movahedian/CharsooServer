@@ -121,30 +121,8 @@
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\PuzzlesController.cs" />
     <Compile Include="Controllers\UserPuzzlesController.cs" />
-    <Compile Include="Models\UserPuzzle.cs">
-      <DependentUpon>CharsooDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Services\SmsService.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CharsooDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CharsooDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CharsooDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CharsooDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CharsooDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CharsooDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\LogIn.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
@@ -160,6 +138,28 @@
     </Compile>
     <Compile Include="Models\Puzzle.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserPuzzle.cs">
+      <DependentUpon>CharsooDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\SmsService.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CharsooDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharsooDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CharsooDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharsooDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CharsooDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CharsooDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

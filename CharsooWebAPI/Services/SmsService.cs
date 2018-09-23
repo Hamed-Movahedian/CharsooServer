@@ -24,16 +24,16 @@ namespace CharsooWebAPI.Services
 
                 // code 411 is invalid phone number
                 if (code == 411)
-                    return "InvalidPhoneNumber";
+                    return "Invalid Phone Number";
 
-                return "NoSmsService";
+                return "No Sms Service";
             }
             catch (Exception)
             {
-                return "NoSmsService";
+                return "No Sms Service";
             }
 
-            return "OK";
+            return "Success";
         }
 
     }

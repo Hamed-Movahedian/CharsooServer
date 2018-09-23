@@ -388,7 +388,7 @@
           <Key>
             <PropertyRef Name="PlayerID" />
           </Key>
-          <Property Name="PlayerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlayerID" Type="Int32" annotation:StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Avatar" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Telephone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
