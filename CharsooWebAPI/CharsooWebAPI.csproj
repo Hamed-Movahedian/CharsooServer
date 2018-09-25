@@ -118,6 +118,7 @@
     <Compile Include="Controllers\CommandController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\PlayerInfoController.cs" />
+    <Compile Include="Controllers\PlayPuzzlesController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
     <Compile Include="Controllers\PuzzlesController.cs" />
     <Compile Include="Controllers\UserPuzzlesController.cs" />
@@ -130,7 +131,7 @@
     <Compile Include="Models\PlayerInfo.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlayerPuzzle.cs">
+    <Compile Include="Models\PlayPuzzle.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Purchase.cs">

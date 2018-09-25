@@ -12,19 +12,16 @@ namespace CharsooWebAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PlayerPuzzle
+    public partial class PlayPuzzle
     {
-        public System.DateTime Time { get; set; }
-        public System.DateTimeOffset Duration { get; set; }
-        public int MoveCount { get; set; }
-        public short HintCount1 { get; set; }
-        public bool Success { get; set; }
-        public short HintCount2 { get; set; }
-        public short HintCount3 { get; set; }
         public int PlayerID { get; set; }
         public int PuzzleID { get; set; }
-    
-        internal virtual Puzzle Puzzle { get; set; }
-        internal virtual PlayerInfo PlayerInfo { get; set; }
+        public System.DateTime Time { get; set; }
+        public int MoveCount { get; set; }
+        public int HintCount1 { get; set; }
+        public int HintCount2 { get; set; }
+        public int HintCount3 { get; set; }
+        public bool Success { get; set; }
+        public int Duration { get; set; }
     }
 }

@@ -12,19 +12,17 @@ using CharsooWebAPI.Models;
 
 namespace CharsooWebAPI.Controllers
 {
-    [RoutePrefix("api/Purchases")]
-    public class PurchasesController : ApiController
+    [RoutePrefix("api/PlayPuzzles")]
+    public class PlayPuzzlesController : ApiController
     {
         private charsoog_DBEntities db = new charsoog_DBEntities();
 
-        [Route("GetPurchase"),HttpPost,ResponseType(typeof(List<Purchase>))]
-        public IHttpActionResult GetPurchase(int playerID,DateTime lastUpdate)
+        [Route("GetPlayerHistory"), HttpPost, ResponseType(typeof(List<PlayPuzzle>))]
+        public IHttpActionResult GetPlayerHistory(int playerID)
         {
-            lastUpdate = lastUpdate.AddMilliseconds(999);
-
             var purchases = db
-                .Purchases
-                .Where(p => p.LastUpdate > lastUpdate && p.PlayerID==playerID).ToList();
+                .PlayPuzzles
+                .Where(p => p.PlayerID == playerID).ToList();
 
             return Ok(purchases);
         }
@@ -39,9 +37,9 @@ namespace CharsooWebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool PurchaseExists(int id)
+        private bool PlayPuzzleExists(int id)
         {
-            return db.Purchases.Count(e => e.PlayerID == id) > 0;
+            return db.PlayPuzzles.Count(e => e.PlayerID == id) > 0;
         } 
         #endregion
     }

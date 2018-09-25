@@ -48,13 +48,17 @@ namespace CharsooWebAPI.Controllers
 
         #region ConnectToAccount
 
-        [ResponseType(typeof(PlayerInfo)), HttpPost, Route("ConnectToAccount")]
+        [ResponseType(typeof(AccountInfo)), HttpPost, Route("ConnectToAccount")]
         public IHttpActionResult ConnectToAccount(string phoneNumber)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            var accountInfo = new AccountInfo();
+
+            // ****************** Get player info
 
             // Search for players by phone number
             var players = _db.PlayerInfoes
@@ -65,7 +69,36 @@ namespace CharsooWebAPI.Controllers
             if (players.Count == 0)
                 return NotFound();
 
-            return Ok(players[0]);
+            accountInfo.PlayerInfo = players[0];
+
+            // ********************* get user puzzles
+            accountInfo.UserPuzzles = _db
+                .UserPuzzles
+                .Where(p => p.CreatorID == accountInfo.PlayerInfo.PlayerID)
+                .Select(sp => new ClientUserPuzzle
+                {
+                    ServerID = sp.ID,
+                    ID = sp.ClientID,
+                    Content = sp.Content,
+                    Clue = sp.Clue,
+                    CategoryName = sp.CategoryID == null ? null : sp.Category.Name,
+                    PlayCount = sp.PlayCount,
+                    Rate = sp.Rate
+                })
+                .ToList();
+
+
+            // ********************* get purchases
+            accountInfo.Purchaseses = _db
+                .Purchases
+                .Where(p => p.PlayerID == accountInfo.PlayerInfo.PlayerID).ToList();
+
+            // ********************* Get play puzzles
+            accountInfo.PlayPuzzleses = _db
+                .PlayPuzzles
+                .Where(p => p.PlayerID == accountInfo.PlayerInfo.PlayerID).ToList();
+
+            return Ok(accountInfo);
         }
 
 
@@ -85,5 +118,26 @@ namespace CharsooWebAPI.Controllers
         }
 
         #endregion
+
+        #region Account info classes
+        public class AccountInfo
+        {
+            public PlayerInfo PlayerInfo;
+            public List<ClientUserPuzzle> UserPuzzles;
+            public List<PlayPuzzle> PlayPuzzleses;
+            public List<Purchase> Purchaseses;
+        }
+        public class ClientUserPuzzle
+        {
+            public int ID { get; set; }
+            public int? ServerID { get; set; }
+            public string Clue { get; set; }
+            public string Content { get; set; }
+            public int? Rate { get; set; }
+            public int? PlayCount { get; set; }
+            public string CategoryName { get; set; }
+        }
+        #endregion
     }
+
 }

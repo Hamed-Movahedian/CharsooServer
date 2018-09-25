@@ -31,6 +31,7 @@ namespace CharsooWebAPI.Controllers
         public List<Puzzle> GetPuzzlesUpdates(DateTime recent)
         {
             recent = recent.AddMilliseconds(999);
+
             var puzzleUpdates = db.Puzzles.Where(c => c.LastUpdate > recent).ToList();
 
             return puzzleUpdates;

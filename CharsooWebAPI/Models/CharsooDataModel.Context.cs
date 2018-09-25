@@ -26,11 +26,11 @@ namespace CharsooWebAPI.Models
         }
     
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<PlayerPuzzle> PlayerPuzzles { get; set; }
         public virtual DbSet<Puzzle> Puzzles { get; set; }
         public virtual DbSet<PlayerInfo> PlayerInfoes { get; set; }
         public virtual DbSet<LogIn> LogIns { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<UserPuzzle> UserPuzzles { get; set; }
+        public virtual DbSet<PlayPuzzle> PlayPuzzles { get; set; }
     }
 }

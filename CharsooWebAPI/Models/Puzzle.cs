@@ -14,12 +14,6 @@ namespace CharsooWebAPI.Models
     
     public partial class Puzzle
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Puzzle()
-        {
-            this.PlayerPuzzles = new HashSet<PlayerPuzzle>();
-        }
-    
         public int ID { get; set; }
         public string Clue { get; set; }
         public string Content { get; set; }
@@ -33,7 +27,5 @@ namespace CharsooWebAPI.Models
         public Nullable<int> PlayCount { get; set; }
     
         internal virtual Category Category { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        internal virtual ICollection<PlayerPuzzle> PlayerPuzzles { get; set; }
     }
 }
