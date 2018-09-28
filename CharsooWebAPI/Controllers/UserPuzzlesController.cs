@@ -102,7 +102,25 @@ namespace CharsooWebAPI.Controllers
 
             return Ok(outData);
         }
+
+        #region Get Userpuzzle
+
+        [ResponseType(typeof(UserPuzzle))]
+        public IHttpActionResult GetPlayerInfo(int id)
+        {
+            UserPuzzle onlinePuzzle = _db.UserPuzzles.Find(id);
+            if (onlinePuzzle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(onlinePuzzle);
+        }
+
         
+
+        #endregion
+
         #region InData & OutData classes
 
         public class OutData
