@@ -44,8 +44,8 @@ namespace CharsooWebAPI.Controllers
         #region Update
 
         // PUT: api/PlayerInfo/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutPlayerInfo(int id, PlayerInfo playerInfo)
+        [ResponseType(typeof(string)), HttpPost, Route("Update")]
+        public IHttpActionResult UpdatePlayerInfo(int id, [FromBody] PlayerInfo playerInfo)
         {
             if (!ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace CharsooWebAPI.Controllers
             {
                 if (!PlayerInfoExists(id))
                 {
-                    return NotFound();
+                    return Ok("Fail");
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace CharsooWebAPI.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok("Success");
         }
         #endregion
 

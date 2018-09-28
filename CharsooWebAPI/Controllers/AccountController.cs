@@ -18,7 +18,7 @@ namespace CharsooWebAPI.Controllers
         #region SendSms
 
         [ResponseType(typeof(string)), HttpPost, Route("SendSms")]
-        public IHttpActionResult SendSms(string phoneNumber, string code)
+        public IHttpActionResult SendSms(string phoneNumber, string code,bool forRegister)
         {
             if (!ModelState.IsValid)
             {
@@ -31,7 +31,12 @@ namespace CharsooWebAPI.Controllers
                 .ToList();
 
             // phone number not registered !!!!
-            if (players.Count == 0)
+            if (forRegister)
+            {
+                if(players.Count>0)
+                    return Ok("Repetitive Number");
+            }
+            else if (players.Count == 0)
                 return Ok("Not Register");
 
             // Send sms and get result ( OK or InvalidPhoneNumber of NoSmsService )
@@ -40,6 +45,33 @@ namespace CharsooWebAPI.Controllers
                 $"سلام دوست عزیز به چهارسو خوش آمدید\nکد فعال سازی شما : {code}");
 
             return Ok(result);
+        }
+
+
+
+        #endregion
+
+        #region RegisterPhoneNumber
+
+        [ResponseType(typeof(PlayerInfo)), HttpPost, Route("RegisterPhoneNumber")]
+        public IHttpActionResult RegisterPhoneNumber(int playerID,string phoneNumber)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Search for player by ID
+            var player = _db.PlayerInfoes
+                .FirstOrDefault(pi => pi.PlayerID == playerID);
+
+            // Player not found !!!!
+            if (player == null)
+                return NotFound();
+
+            player.Telephone = phoneNumber;
+
+            return Ok(player);
         }
 
 
