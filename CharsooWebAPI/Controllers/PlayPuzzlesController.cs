@@ -20,11 +20,41 @@ namespace CharsooWebAPI.Controllers
         [Route("GetPlayerHistory"), HttpPost, ResponseType(typeof(List<PlayPuzzle>))]
         public IHttpActionResult GetPlayerHistory(int playerID)
         {
-            var purchases = db
+            var playPuzzles = db
                 .PlayPuzzles
                 .Where(p => p.PlayerID == playerID).ToList();
 
-            return Ok(purchases);
+            return Ok(playPuzzles);
+        }
+
+        [Route("AddHistory"), HttpPost, ResponseType(typeof(string))]
+        public IHttpActionResult AddHistory(List<PlayPuzzle> history)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var addList = new List<PlayPuzzle>();
+
+            foreach (var playPuzzle in history)
+            {
+                if(db.PlayPuzzles.Find(playPuzzle.PlayerID,playPuzzle.PuzzleID,playPuzzle.Time)==null)
+                    addList.Add(playPuzzle);
+            }
+
+            db.PlayPuzzles.AddRange(addList);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Ok("Fail");
+            }
+
+            return Ok("Success");
         }
 
         #region Tools

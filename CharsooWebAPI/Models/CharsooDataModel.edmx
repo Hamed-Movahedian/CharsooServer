@@ -56,6 +56,7 @@
           <Property Name="HintCount3" Type="int" Nullable="false" />
           <Property Name="Success" Type="bit" Nullable="false" />
           <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="Dirty" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Purchases">
           <Key>
@@ -416,6 +417,7 @@
           <Property Name="HintCount3" Type="Int32" Nullable="false" />
           <Property Name="Success" Type="Boolean" Nullable="false" />
           <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="Dirty" Type="Boolean" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -504,6 +506,7 @@
           <EntitySetMapping Name="PlayPuzzles">
             <EntityTypeMapping TypeName="CharsooModels.PlayPuzzle">
               <MappingFragment StoreEntitySet="PlayPuzzles">
+                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="Success" ColumnName="Success" />
                 <ScalarProperty Name="HintCount3" ColumnName="HintCount3" />

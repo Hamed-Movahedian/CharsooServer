@@ -96,7 +96,6 @@ namespace CharsooWebAPI.Controllers
             db.PlayerInfoes.Add(playerInfo);
             db.SaveChanges();
 
-            int count = db.PlayerInfoes.Count();
 
             return Ok(playerInfo); //CreatedAtRoute("DefaultApi", new { id = playerInfo.PlayerID }, playerInfo);
         }

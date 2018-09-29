@@ -23,5 +23,6 @@ namespace CharsooWebAPI.Models
         public int HintCount3 { get; set; }
         public bool Success { get; set; }
         public int Duration { get; set; }
+        public bool Dirty { get; set; }
     }
 }
