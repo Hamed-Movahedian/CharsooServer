@@ -61,7 +61,10 @@ namespace CharsooWebAPI.Controllers
             foreach (var purchase in purchases)
             {
                 if (db.Purchases.Find(purchase.PlayerID, purchase.PurchaseID) == null)
+                {
+                    purchase.Dirty = false;
                     addList.Add(purchase);
+                }
             }
 
             db.Purchases.AddRange(addList);
