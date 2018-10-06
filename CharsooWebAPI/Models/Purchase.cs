@@ -17,6 +17,7 @@ namespace CharsooWebAPI.Models
         public int PlayerID { get; set; }
         public string PurchaseID { get; set; }
         public System.DateTime LastUpdate { get; set; }
+        public bool Dirty { get; set; }
     
         internal virtual PlayerInfo PlayerInfo { get; set; }
     }

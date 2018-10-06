@@ -68,6 +68,7 @@
           <Property Name="PlayerID" Type="int" Nullable="false" />
           <Property Name="PurchaseID" Type="nchar" MaxLength="15" Nullable="false" />
           <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+          <Property Name="Dirty" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Puzzles">
           <Key>
@@ -366,6 +367,7 @@
           <Property Name="PurchaseID" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="PlayerInfo" Relationship="CharsooModels.FK_Purchases_PlayerInfo" FromRole="Purchase" ToRole="PlayerInfo" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
           <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Dirty" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Purchases_PlayerInfo">
           <End Type="CharsooModels.PlayerInfo" Role="PlayerInfo" Multiplicity="1" />
@@ -488,6 +490,7 @@
           <EntitySetMapping Name="Purchases">
             <EntityTypeMapping TypeName="CharsooModels.Purchase">
               <MappingFragment StoreEntitySet="Purchases">
+                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
                 <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
                 <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
                 <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />

@@ -17,14 +17,14 @@ namespace CharsooWebAPI.Controllers
     {
         private charsoog_DBEntities db = new charsoog_DBEntities();
 
-        [Route("GetPurchase"),HttpPost,ResponseType(typeof(List<Purchase>))]
-        public IHttpActionResult GetPurchase(int playerID,DateTime lastUpdate)
+        [Route("GetPurchase"), HttpPost, ResponseType(typeof(List<Purchase>))]
+        public IHttpActionResult GetPurchase(int playerID, DateTime lastUpdate)
         {
             lastUpdate = lastUpdate.AddMilliseconds(999);
 
             var purchases = db
                 .Purchases
-                .Where(p => p.LastUpdate > lastUpdate && p.PlayerID==playerID).ToList();
+                .Where(p => p.LastUpdate > lastUpdate && p.PlayerID == playerID).ToList();
 
             return Ok(purchases);
         }
@@ -42,7 +42,42 @@ namespace CharsooWebAPI.Controllers
         private bool PurchaseExists(int id)
         {
             return db.Purchases.Count(e => e.PlayerID == id) > 0;
-        } 
+        }
+        #endregion
+
+        #region Update
+
+        // PUT: api/Purchases/5
+        [ResponseType(typeof(string)), HttpPost, Route("AddPurchases")]
+        public IHttpActionResult UpdatePurchases(List<Purchase> purchases)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var addList = new List<Purchase>();
+
+            foreach (var purchase in purchases)
+            {
+                if (db.Purchases.Find(purchase.PlayerID, purchase.PurchaseID) == null)
+                    addList.Add(purchase);
+            }
+
+            db.Purchases.AddRange(addList);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Ok("Fail");
+            }
+
+            return Ok("Success");
+        }
         #endregion
     }
+
 }
