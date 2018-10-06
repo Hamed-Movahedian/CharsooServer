@@ -56,7 +56,7 @@ namespace CharsooWebAPI.Controllers
             {
                 return BadRequest();
             }
-
+            playerInfo.Dirty = false;
             db.Entry(playerInfo).State = EntityState.Modified;
 
             try

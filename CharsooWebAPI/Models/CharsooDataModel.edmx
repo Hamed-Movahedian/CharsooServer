@@ -40,6 +40,8 @@
           <Property Name="Avatar" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="Telephone" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="CoinCount" Type="int" Nullable="false" />
+          <Property Name="Dirty" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayPuzzles">
           <Key>
@@ -325,6 +327,8 @@
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="LogIns" Relationship="CharsooModels.FK_LogIn_PlayerInfo" FromRole="PlayerInfo" ToRole="LogIn" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
           <NavigationProperty Name="Purchases" Relationship="CharsooModels.FK_Purchases_PlayerInfo" FromRole="PlayerInfo" ToRole="Purchase" />
+          <Property Name="CoinCount" Type="Int32" Nullable="false" />
+          <Property Name="Dirty" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="LogIn">
           <Key>
@@ -460,6 +464,8 @@
           <EntitySetMapping Name="PlayerInfoes">
             <EntityTypeMapping TypeName="CharsooModels.PlayerInfo">
               <MappingFragment StoreEntitySet="PlayerInfo">
+                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
+                <ScalarProperty Name="CoinCount" ColumnName="CoinCount" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="Avatar" ColumnName="Avatar" />
