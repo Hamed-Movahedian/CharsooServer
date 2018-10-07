@@ -113,7 +113,32 @@ namespace CharsooWebAPI.Controllers
         }
 
         #endregion
-        
+
+        #region Report
+
+        // POST: api/Puzzles
+        #region ConnectToAccount
+
+        [ResponseType(typeof(string)), HttpPost, Route("Report")]
+        public IHttpActionResult Report(string puzzlePlayer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(puzzlePlayer.Split('/').Length<2)
+                return Ok("Fail");
+
+
+            return Ok("Success");
+        }
+
+
+        #endregion
+
+        #endregion
+
         #region Delete
 
         // DELETE: api/Puzzles/5
