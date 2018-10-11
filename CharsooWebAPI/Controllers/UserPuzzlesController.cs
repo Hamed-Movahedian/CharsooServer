@@ -16,6 +16,34 @@ namespace CharsooWebAPI.Controllers
     [RoutePrefix("api/UserPuzzles")]
     public class UserPuzzlesController : ApiController
     {
+        [ResponseType(typeof(string)), HttpPost, Route("GetInviteData")]
+        public IHttpActionResult GetInviteData(int puzzleID, int senderID)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            var userPuzzle = _db.UserPuzzles.FirstOrDefault(up => up.ID == puzzleID);
+            var senderInfo = _db.PlayerInfoes.FirstOrDefault(pi => pi.PlayerID == senderID);
+
+            if (userPuzzle == null || senderInfo == null)
+                return InternalServerError();
+
+            var creatorInfo = _db.PlayerInfoes.FirstOrDefault(pi => pi.PlayerID == userPuzzle.CreatorID);
+
+            var result = new JObject()
+            {
+                ["Clue"] = userPuzzle.Clue,
+                ["Creator"] = creatorInfo == null ? "Unknown" : creatorInfo.Name,
+                ["Content"] = userPuzzle.Content,
+                ["Sender"] = senderInfo.Name
+            };
+
+            return Ok(result.ToString());
+        }
+
 
         [ResponseType(typeof(OutData)), HttpPost, Route("Sync")]
         public IHttpActionResult Sync(InData inData)
@@ -51,7 +79,7 @@ namespace CharsooWebAPI.Controllers
                     // new puzzle already exist
                     existingRecord.Clue = cPuzzle.Clue;
                     existingRecord.Content = cPuzzle.Content;
-                    existingRecord.LastUpdate= DateTime.Now;
+                    existingRecord.LastUpdate = DateTime.Now;
 
                     _db.Entry(existingRecord).State = EntityState.Modified;
 
@@ -117,7 +145,7 @@ namespace CharsooWebAPI.Controllers
             return Ok(onlinePuzzle);
         }
 
-        
+
 
         #endregion
 
@@ -153,7 +181,7 @@ namespace CharsooWebAPI.Controllers
                 public int ID { get; set; }
             }
         }
-        
+
 
         #endregion
 
