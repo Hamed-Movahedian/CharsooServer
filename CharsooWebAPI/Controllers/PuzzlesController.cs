@@ -161,7 +161,49 @@ namespace CharsooWebAPI.Controllers
         }
 
         #endregion
-        
+
+
+
+        #region Replace
+
+        // PUT: api/Puzzle/
+        [ResponseType(typeof(string)), HttpPost, Route("Replace")]
+        public IHttpActionResult ReplacePuzzle(int id, [FromBody] Puzzle puzzle)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != puzzle.ID)
+            {
+                return BadRequest();
+            }
+            puzzle.LastUpdate =DateTime.Now;
+            db.Entry(puzzle).State = EntityState.Modified;
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PuzzleExists(id))
+                {
+                    return Ok("Fail");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok("Success");
+        }
+        #endregion
+
+
+
         #endregion
 
         #region Tools
