@@ -44,6 +44,24 @@ namespace CharsooWebAPI.Controllers
             return Ok(result.ToString());
         }
 
+        [ResponseType(typeof(string)), HttpPost, Route("RegisterFeedback")]
+        public IHttpActionResult RegisterFeedback(int puzzleID, int playerID,float star)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            var userPuzzle = _db.UserPuzzles.FirstOrDefault(up => up.ID == puzzleID);
+            var senderInfo = _db.PlayerInfoes.FirstOrDefault(pi => pi.PlayerID == playerID);
+
+            if (userPuzzle == null || senderInfo == null)
+                return InternalServerError();
+
+            return Ok("Success");
+        }
+
 
         [ResponseType(typeof(OutData)), HttpPost, Route("Sync")]
         public IHttpActionResult Sync(InData inData)
