@@ -116,6 +116,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CommandController.cs" />
+    <Compile Include="Controllers\InterfaceController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\PlayerInfoController.cs" />
     <Compile Include="Controllers\PlayPuzzlesController.cs" />
