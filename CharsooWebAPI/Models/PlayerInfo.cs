@@ -28,6 +28,7 @@ namespace CharsooWebAPI.Models
         public string Email { get; set; }
         public int CoinCount { get; set; }
         public bool Dirty { get; set; }
+        public bool HasDubler { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         internal virtual ICollection<LogIn> LogIns { get; set; }
