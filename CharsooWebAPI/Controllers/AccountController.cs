@@ -17,6 +17,7 @@ namespace CharsooWebAPI.Controllers
     {
         #region SendSms
 
+        [FollowMachine("Send SMS", "Repetitive Number,Not Register,Invalid Phone Number,No Sms Service,Success")]
         [ResponseType(typeof(string)), HttpPost, Route("SendSms")]
         public IHttpActionResult SendSms(string phoneNumber, string code,bool forRegister)
         {

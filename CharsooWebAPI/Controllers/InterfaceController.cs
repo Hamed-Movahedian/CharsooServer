@@ -42,10 +42,21 @@ namespace CharsooWebAPI.Controllers
                 var methodsJArray = new JArray();
 
                 foreach (var method in methods)
-                    methodsJArray.Add(new JObject
+                {
+                    var fmAtrib = method.GetCustomAttribute<FollowMachineAttribute>();
+
+                    var methodJObject = new JObject
                     {
                         ["Name"] = GetMethodName(method)
-                    });
+                    };
+                    if (fmAtrib != null)
+                    {
+                        methodJObject["Info"] = fmAtrib.Info;
+                        methodJObject["Outputs"] = fmAtrib.Outputs;
+                    }
+                    methodsJArray.Add(methodJObject);
+
+                }
 
                 controllersJArray.Add(new JObject()
                 {
@@ -98,5 +109,18 @@ namespace CharsooWebAPI.Controllers
         }
     }
 
+    public class FollowMachineAttribute : Attribute
+    {
+        public string Info { get; set; }
 
+        public string Outputs { get; set; }
+
+        public FollowMachineAttribute(string info, string outputs = "")
+        {
+            Info = info;
+            Outputs = outputs;
+        }
+
+
+    }
 }
