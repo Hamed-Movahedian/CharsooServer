@@ -36,5 +36,32 @@ namespace CharsooWebAPI.Services
             return "Success";
         }
 
+        public static string CallVerifyService(string phoneNumber, string template,string vcode)
+        {
+            try
+            {
+                var wc = new WebClient();
+                wc.DownloadString(
+                    $@"https://api.kavenegar.com/v1/{API_KEY}/verify/lookup.json?receptor={phoneNumber}&token={vcode}&template={template}");
+            }
+            catch (WebException ex)
+            {
+                // Get error code
+                int code= (int) ((HttpWebResponse) ex.Response).StatusCode;
+
+                // code 411 is invalid phone number
+                if (code == 411)
+                    return "Invalid Phone Number";
+
+                return "No Sms Service";
+            }
+            catch (Exception)
+            {
+                return "No Sms Service";
+            }
+
+            return "Success";
+        }
+
     }
 }

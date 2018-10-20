@@ -42,6 +42,7 @@
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="CoinCount" Type="int" Nullable="false" />
           <Property Name="Dirty" Type="bit" Nullable="false" />
+          <Property Name="HasDubler" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PlayPuzzles">
           <Key>
@@ -330,6 +331,7 @@
           <NavigationProperty Name="Purchases" Relationship="CharsooModels.FK_Purchases_PlayerInfo" FromRole="PlayerInfo" ToRole="Purchase" />
           <Property Name="CoinCount" Type="Int32" Nullable="false" />
           <Property Name="Dirty" Type="Boolean" Nullable="false" />
+          <Property Name="HasDubler" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="LogIn">
           <Key>
@@ -466,6 +468,7 @@
           <EntitySetMapping Name="PlayerInfoes">
             <EntityTypeMapping TypeName="CharsooModels.PlayerInfo">
               <MappingFragment StoreEntitySet="PlayerInfo">
+                <ScalarProperty Name="HasDubler" ColumnName="HasDubler" />
                 <ScalarProperty Name="Dirty" ColumnName="Dirty" />
                 <ScalarProperty Name="CoinCount" ColumnName="CoinCount" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
