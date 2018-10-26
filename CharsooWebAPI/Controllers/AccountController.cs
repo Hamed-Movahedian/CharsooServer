@@ -40,11 +40,11 @@ namespace CharsooWebAPI.Controllers
             else if (players.Count == 0)
                 return Ok("Not Register");
 
-            var result = SmsService.CallVerifyService(phoneNumber, "VerifyCode", code);
+            //var result = SmsService.CallVerifyService(phoneNumber, "VerifyCode", code);
 
 
             // Send sms and get result ( OK or InvalidPhoneNumber of NoSmsService )
-            //var result = SmsService.CallSmsService(phoneNumber,$"سلام دوست عزیز به چهارسو خوش آمدید\nکد فعال سازی شما : {code}");
+            var result = SmsService.CallSmsService(phoneNumber,$"سلام دوست عزیز به چهارسو خوش آمدید\nکد فعال سازی شما : {code}");
 
             return Ok(result);
         }
