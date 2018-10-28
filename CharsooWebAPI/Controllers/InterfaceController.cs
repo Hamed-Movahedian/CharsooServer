@@ -17,95 +17,76 @@ namespace CharsooWebAPI.Controllers
         [ResponseType(typeof(string)), HttpGet, Route("GetControllers")]
         public IHttpActionResult GetInterface()
         {
-            var controllerList =
-                GetType()
-                .Assembly
-                .GetTypes()
+            return Ok(JArray.FromObject(
+                ControllerList
+                    .Select(coltroller => new
+                    {
+                        // Controller
+                        Name = coltroller.Name,
+
+                        Prefix = coltroller.GetCustomAttribute<RoutePrefixAttribute>()?.Prefix,
+
+                        Methods = GetControllerMethods(coltroller)
+                            .Select(method => new
+                            {
+                                // Method
+                                Name = method.Name,
+
+                                Prefix = method.GetCustomAttribute<RouteAttribute>()?.Template,
+
+                                ConnectionMethod = method.GetCustomAttribute<HttpPostAttribute>() == null ? 
+                                    ServerConnectionMethod.Get : 
+                                    ServerConnectionMethod.Post,
+
+                                Info = method.GetCustomAttribute<FollowMachineAttribute>()?.Info,
+
+                                Outputs = method.GetCustomAttribute<FollowMachineAttribute>()?
+                                    .Outputs
+                                    .Split(new []{','},StringSplitOptions.RemoveEmptyEntries),
+
+                                Parameters = method.GetParameters()
+                                    .Select(paramInfo => new
+                                    {
+                                        // Parameter
+                                        paramInfo.Name,
+                                        TypeName = paramInfo.ParameterType.Name,
+                                        FormBody = paramInfo.GetCustomAttribute<FromBodyAttribute>() != null,
+                                    }),
+                            }),
+                    })));
+        }
+
+        private List<Type> ControllerList
+        {
+            get
+            {
+                var controllerList =
+                    GetType()
+                    .Assembly
+                    .GetTypes()
+                        .ToList();
+
+                controllerList = controllerList
+                    .Where(t =>
+                        t.IsSubclassOf(typeof(ApiController)) &&
+                        t != GetType())
                     .ToList();
-
-            controllerList = controllerList
-                .Where(t =>
-                    t.IsSubclassOf(typeof(ApiController)) &&
-                    t != GetType())
-                .ToList();
-
-            var controllersJArray = new JArray();
-
-            foreach (var controller in controllerList)
-            {
-                var methods = controller.GetMethods(
-                    BindingFlags.Instance |
-                    BindingFlags.DeclaredOnly |
-                    BindingFlags.Public 
-                );
-
-                var methodsJArray = new JArray();
-
-                foreach (var method in methods)
-                {
-                    var fmAtrib = method.GetCustomAttribute<FollowMachineAttribute>();
-
-                    var methodJObject = new JObject
-                    {
-                        ["Name"] = GetMethodName(method)
-                    };
-                    if (fmAtrib != null)
-                    {
-                        methodJObject["Info"] = fmAtrib.Info;
-                        methodJObject["Outputs"] = fmAtrib.Outputs;
-                    }
-                    methodsJArray.Add(methodJObject);
-
-                }
-
-                controllersJArray.Add(new JObject()
-                {
-                    ["Name"]=GetControllerName(controller),
-                    ["Methods"]=methodsJArray
-                });
+                return controllerList;
             }
-
-
-            return Ok(controllersJArray);
         }
 
-        private string GetMethodName(MethodInfo method)
+        private static MethodInfo[] GetControllerMethods(Type controller)
         {
-            var routeAttribute = method.GetCustomAttribute<RouteAttribute>();
-
-            var name = "";
-
-            if (routeAttribute == null)
-                name = method.Name+"(";
-            else
-                name = routeAttribute.Template.Split('/').First() + "(";
-
-            var parameterInfos = method.GetParameters();
-
-            for (int i = 0; i < parameterInfos.Length; i++)
-            {
-                var param = parameterInfos[i];
-                var fromBodyAttribute = param.GetCustomAttribute<FromBodyAttribute>();
-
-                name +=
-                    (i == 0 ? "" : " ,") +
-                    (fromBodyAttribute==null ? "":"[FromBody] ")+
-                    param.ParameterType.Name + " " + param.Name;
-
-            }
-
-            return name + ")";
+            return controller.GetMethods(
+                BindingFlags.Instance |
+                BindingFlags.DeclaredOnly |
+                BindingFlags.Public
+            );
         }
 
-        private string GetControllerName(Type controller)
+        public enum ServerConnectionMethod
         {
-            var prefixAttribute = (RoutePrefixAttribute)controller.GetCustomAttribute(typeof(RoutePrefixAttribute));
-            if (prefixAttribute == null)
-                return controller.Name;
-            else
-            {
-                return prefixAttribute.Prefix.Split('/').Last();
-            }
+            Get, Post
         }
     }
 
