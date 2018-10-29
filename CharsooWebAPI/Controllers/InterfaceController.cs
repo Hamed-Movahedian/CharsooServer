@@ -56,32 +56,24 @@ namespace CharsooWebAPI.Controllers
                     })));
         }
 
-        private List<Type> ControllerList
-        {
-            get
-            {
-                var controllerList =
-                    GetType()
-                    .Assembly
-                    .GetTypes()
-                        .ToList();
+        private List<Type> ControllerList => GetType()
+            .Assembly
+            .GetTypes()
+            .Where(t =>
+                t.IsSubclassOf(typeof(ApiController)) &&
+                t != GetType())
+            .Where(c=>c.GetCustomAttribute<RoutePrefixAttribute>()!=null)
+            .ToList();
 
-                controllerList = controllerList
-                    .Where(t =>
-                        t.IsSubclassOf(typeof(ApiController)) &&
-                        t != GetType())
-                    .ToList();
-                return controllerList;
-            }
-        }
-
-        private static MethodInfo[] GetControllerMethods(Type controller)
+        private static IEnumerable<MethodInfo> GetControllerMethods(Type controller)
         {
-            return controller.GetMethods(
-                BindingFlags.Instance |
-                BindingFlags.DeclaredOnly |
-                BindingFlags.Public
-            );
+            return controller
+                .GetMethods(
+                    BindingFlags.Instance |
+                    BindingFlags.DeclaredOnly |
+                    BindingFlags.Public
+                )
+                .Where(m => m.GetCustomAttribute<RouteAttribute>() != null);
         }
 
         public enum ServerConnectionMethod
