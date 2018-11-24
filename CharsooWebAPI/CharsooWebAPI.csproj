@@ -121,6 +121,7 @@
     <Compile Include="Controllers\PlayerInfoController.cs" />
     <Compile Include="Controllers\PlayPuzzlesController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
+    <Compile Include="Controllers\PuzzleRatesController.cs" />
     <Compile Include="Controllers\PuzzlesController.cs" />
     <Compile Include="Controllers\UserPuzzlesController.cs" />
     <Compile Include="Models\Category.cs">
@@ -139,6 +140,9 @@
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Puzzle.cs">
+      <DependentUpon>CharsooDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PuzzleRate.cs">
       <DependentUpon>CharsooDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserPuzzle.cs">

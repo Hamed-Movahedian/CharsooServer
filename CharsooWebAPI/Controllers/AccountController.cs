@@ -44,7 +44,7 @@ namespace CharsooWebAPI.Controllers
 
 
             // Send sms and get result ( OK or InvalidPhoneNumber of NoSmsService )
-            var result = SmsService.CallSmsService(phoneNumber,$"سلام دوست عزیز به چهارسو خوش آمدید\nکد فعال سازی شما : {code}");
+            var result = SmsService.CallSmsService(phoneNumber, $"سلام دوست عزیز به چارسو خوش آمدید\nکد فعال سازی شما : {code}");
 
             return Ok(result);
         }
@@ -109,15 +109,26 @@ namespace CharsooWebAPI.Controllers
             accountInfo.UserPuzzles = _db
                 .UserPuzzles
                 .Where(p => p.CreatorID == accountInfo.PlayerInfo.PlayerID)
-                .Select(sp => new ClientUserPuzzle
+                .ToList()
+                .Select(p =>
                 {
-                    ServerID = sp.ID,
-                    ID = sp.ClientID,
-                    Content = sp.Content,
-                    Clue = sp.Clue,
-                    CategoryName = sp.CategoryID == null ? null : sp.Category.Name,
-                    PlayCount = sp.PlayCount,
-                    Rate = sp.Rate
+                    var rates = _db.PuzzleRates.Where(pr => pr.PuzzleID == p.ID);
+
+                    int? count = null;
+                    if (rates.Any()) count = rates.Count();
+
+                    return new ClientUserPuzzle
+                    {
+
+                        ServerID = p.ID,
+                        CategoryName = p.CategoryID.HasValue ?
+                            (p.CategoryID == 2050 ? "-" : _db.Categories.FirstOrDefault(c => c.ID == p.CategoryID.Value)?.Name) : "",
+                        Rate = rates.Any() ? (int?)Math.Round(rates.Average(pr => pr.Rate)) : null,
+                        PlayCount = count,
+                        Content = p.Content,
+                        Clue = p.Clue,
+                        ID = p.ClientID
+                    };
                 })
                 .ToList();
 

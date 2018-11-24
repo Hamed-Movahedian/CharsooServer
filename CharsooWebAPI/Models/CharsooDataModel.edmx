@@ -71,6 +71,15 @@
           <Property Name="LastUpdate" Type="datetime" Nullable="false" />
           <Property Name="Dirty" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="PuzzleRate">
+          <Key>
+            <PropertyRef Name="PuzzleID" />
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PuzzleID" Type="int" Nullable="false" />
+          <Property Name="PlayerID" Type="int" Nullable="false" />
+          <Property Name="Rate" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Puzzles">
           <Key>
             <PropertyRef Name="ID" />
@@ -98,7 +107,6 @@
           <Property Name="Content" Type="nvarchar" MaxLength="1500" Nullable="false" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-          <Property Name="Rate" Type="int" />
           <Property Name="PlayCount" Type="int" />
         </EntityType>
         <Association Name="FK_CategoryParent">
@@ -163,6 +171,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlayerID">
+          <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1" />
+          <End Role="PuzzleRate" Type="Self.PuzzleRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerInfo">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PuzzleRate">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Purchases_PlayerInfo">
           <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1" />
           <End Role="Purchases" Type="Self.Purchases" Multiplicity="*" />
@@ -175,12 +195,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PuzzleID">
+          <End Role="UserPuzzles" Type="Self.UserPuzzles" Multiplicity="1" />
+          <End Role="PuzzleRate" Type="Self.PuzzleRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPuzzles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PuzzleRate">
+              <PropertyRef Name="PuzzleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="CharsooModelsStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogIn" EntityType="Self.LogIn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayerInfo" EntityType="Self.PlayerInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlayPuzzles" EntityType="Self.PlayPuzzles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Purchases" EntityType="Self.Purchases" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuzzleRate" EntityType="Self.PuzzleRate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Puzzles" EntityType="Self.Puzzles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPuzzles" EntityType="Self.UserPuzzles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CategoryParent" Association="Self.FK_CategoryParent">
@@ -203,9 +236,17 @@
             <End Role="PlayerInfo" EntitySet="PlayerInfo" />
             <End Role="LogIn" EntitySet="LogIn" />
           </AssociationSet>
+          <AssociationSet Name="FK_PlayerID" Association="Self.FK_PlayerID">
+            <End Role="PlayerInfo" EntitySet="PlayerInfo" />
+            <End Role="PuzzleRate" EntitySet="PuzzleRate" />
+          </AssociationSet>
           <AssociationSet Name="FK_Purchases_PlayerInfo" Association="Self.FK_Purchases_PlayerInfo">
             <End Role="PlayerInfo" EntitySet="PlayerInfo" />
             <End Role="Purchases" EntitySet="Purchases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuzzleID" Association="Self.FK_PuzzleID">
+            <End Role="UserPuzzles" EntitySet="UserPuzzles" />
+            <End Role="PuzzleRate" EntitySet="PuzzleRate" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -317,6 +358,15 @@
             <End Role="UserPuzzle" EntitySet="UserPuzzles" />
           </AssociationSet>
           <EntitySet Name="PlayPuzzles" EntityType="CharsooModels.PlayPuzzle" />
+          <EntitySet Name="PuzzleRates" EntityType="CharsooModels.PuzzleRate" />
+          <AssociationSet Name="FK_PlayerID" Association="CharsooModels.FK_PlayerID">
+            <End Role="PlayerInfo" EntitySet="PlayerInfoes" />
+            <End Role="PuzzleRate" EntitySet="PuzzleRates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PuzzleID" Association="CharsooModels.FK_PuzzleID">
+            <End Role="UserPuzzle" EntitySet="UserPuzzles" />
+            <End Role="PuzzleRate" EntitySet="PuzzleRates" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="PlayerInfo">
           <Key>
@@ -332,6 +382,7 @@
           <Property Name="CoinCount" Type="Int32" Nullable="false" />
           <Property Name="Dirty" Type="Boolean" Nullable="false" />
           <Property Name="HasDubler" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PuzzleRates" Relationship="CharsooModels.FK_PlayerID" FromRole="PlayerInfo" ToRole="PuzzleRate" />
         </EntityType>
         <EntityType Name="LogIn">
           <Key>
@@ -394,9 +445,9 @@
           <Property Name="Content" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="LastUpdate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Rate" Type="Int32" />
           <Property Name="PlayCount" Type="Int32" />
           <NavigationProperty Name="Category" Relationship="CharsooModels.FK_CategoryUserPuzzle" FromRole="UserPuzzle" ToRole="Category" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <NavigationProperty Name="PuzzleRates" Relationship="CharsooModels.FK_PuzzleID" FromRole="UserPuzzle" ToRole="PuzzleRate" />
         </EntityType>
         <Association Name="FK_CategoryUserPuzzle">
           <End Type="CharsooModels.Category" Role="Category" Multiplicity="0..1" />
@@ -427,6 +478,41 @@
           <Property Name="Duration" Type="Int32" Nullable="false" />
           <Property Name="Dirty" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="PuzzleRate">
+          <Key>
+            <PropertyRef Name="PuzzleID" />
+            <PropertyRef Name="PlayerID" />
+          </Key>
+          <Property Name="PuzzleID" Type="Int32" Nullable="false" />
+          <Property Name="PlayerID" Type="Int32" Nullable="false" />
+          <Property Name="Rate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PlayerInfo" Relationship="CharsooModels.FK_PlayerID" FromRole="PuzzleRate" ToRole="PlayerInfo" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+          <NavigationProperty Name="UserPuzzle" Relationship="CharsooModels.FK_PuzzleID" FromRole="PuzzleRate" ToRole="UserPuzzle" a:GetterAccess="Internal" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Internal" />
+        </EntityType>
+        <Association Name="FK_PlayerID">
+          <End Type="CharsooModels.PlayerInfo" Role="PlayerInfo" Multiplicity="1" />
+          <End Type="CharsooModels.PuzzleRate" Role="PuzzleRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlayerInfo">
+              <PropertyRef Name="PlayerID" />
+            </Principal>
+            <Dependent Role="PuzzleRate">
+              <PropertyRef Name="PlayerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PuzzleID">
+          <End Type="CharsooModels.UserPuzzle" Role="UserPuzzle" Multiplicity="1" />
+          <End Type="CharsooModels.PuzzleRate" Role="PuzzleRate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPuzzle">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PuzzleRate">
+              <PropertyRef Name="PuzzleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -504,7 +590,6 @@
             <EntityTypeMapping TypeName="CharsooModels.UserPuzzle">
               <MappingFragment StoreEntitySet="UserPuzzles">
                 <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
@@ -528,6 +613,15 @@
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
                 <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuzzleRates">
+            <EntityTypeMapping TypeName="CharsooModels.PuzzleRate">
+              <MappingFragment StoreEntitySet="PuzzleRate">
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+                <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -37,6 +37,7 @@ namespace CharsooWebAPI.Controllers
             {
                 ["Clue"] = userPuzzle.Clue,
                 ["Creator"] = creatorInfo == null ? "Unknown" : creatorInfo.Name,
+                ["CreatorID"] = creatorInfo?.PlayerID.ToString() ?? "",
                 ["Content"] = userPuzzle.Content,
                 ["Sender"] = senderInfo.Name
             };
@@ -45,7 +46,7 @@ namespace CharsooWebAPI.Controllers
         }
 
         [ResponseType(typeof(string)), HttpPost, Route("RegisterFeedback")]
-        public IHttpActionResult RegisterFeedback(int puzzleID, int playerID,float star)
+        public IHttpActionResult RegisterFeedback(int puzzleID, int playerID, float star)
         {
             if (!ModelState.IsValid)
             {
@@ -58,6 +59,8 @@ namespace CharsooWebAPI.Controllers
 
             if (userPuzzle == null || senderInfo == null)
                 return InternalServerError();
+
+
 
             return Ok("Success");
         }
@@ -133,16 +136,25 @@ namespace CharsooWebAPI.Controllers
                 .ToList();
 
             filteredPuzzles.ForEach(
-                    p => outData.UpdatedPuzzles.Add(new OutData.PuzzleUpdate
+                    p =>
                     {
-                        ServerID = p.ID,
-                        CategoryName = p.Category?.Name,
-                        Rate = p.Rate,
-                        PlayCount = p.PlayCount,
-                        Content = p.Content,
-                        Clue = p.Clue,
-                        ID = p.ClientID
-                    }));
+                        var rates = _db.PuzzleRates.Where(pr => pr.PuzzleID == p.ID);
+
+                        int? count = null;
+                        if (rates.Any()) count = rates.Count();
+
+                        outData.UpdatedPuzzles.Add(new OutData.PuzzleUpdate
+                        {
+                            ServerID = p.ID,
+                            CategoryName = p.CategoryID.HasValue ? 
+                            (p.CategoryID == 2050 ? "-" : _db.Categories.FirstOrDefault(c => c.ID == p.CategoryID.Value)?.Name) : "",
+                            Rate = rates.Any() ? (int?)Math.Round(rates.Average(pr => pr.Rate)) : null,
+                            PlayCount = count,
+                            Content = p.Content,
+                            Clue = p.Clue,
+                            ID = p.ClientID
+                        });
+                    });
 
             #endregion
 

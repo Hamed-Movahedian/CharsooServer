@@ -19,6 +19,7 @@ namespace CharsooWebAPI.Models
         {
             this.LogIns = new HashSet<LogIn>();
             this.Purchases = new HashSet<Purchase>();
+            this.PuzzleRates = new HashSet<PuzzleRate>();
         }
     
         public int PlayerID { get; set; }
@@ -34,5 +35,7 @@ namespace CharsooWebAPI.Models
         internal virtual ICollection<LogIn> LogIns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Purchase> Purchases { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PuzzleRate> PuzzleRates { get; set; }
     }
 }

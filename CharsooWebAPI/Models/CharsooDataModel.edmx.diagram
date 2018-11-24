@@ -15,9 +15,12 @@
         <AssociationConnector Association="CharsooModels.FK_LogIn_PlayerInfo" />
         <EntityTypeShape EntityType="CharsooModels.Purchase" Width="1.5" PointX="8" PointY="5.25" />
         <AssociationConnector Association="CharsooModels.FK_Purchases_PlayerInfo" />
-        <EntityTypeShape EntityType="CharsooModels.UserPuzzle" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="CharsooModels.UserPuzzle" Width="1.5" PointX="0.875" PointY="5.75" />
         <AssociationConnector Association="CharsooModels.FK_CategoryUserPuzzle" />
         <EntityTypeShape EntityType="CharsooModels.PlayPuzzle" Width="1.5" PointX="5.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CharsooModels.PuzzleRate" Width="1.5" PointX="12.625" PointY="5.25" />
+        <AssociationConnector Association="CharsooModels.FK_PlayerID" />
+        <AssociationConnector Association="CharsooModels.FK_PuzzleID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

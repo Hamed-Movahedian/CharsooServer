@@ -32,5 +32,6 @@ namespace CharsooWebAPI.Models
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<UserPuzzle> UserPuzzles { get; set; }
         public virtual DbSet<PlayPuzzle> PlayPuzzles { get; set; }
+        public virtual DbSet<PuzzleRate> PuzzleRates { get; set; }
     }
 }

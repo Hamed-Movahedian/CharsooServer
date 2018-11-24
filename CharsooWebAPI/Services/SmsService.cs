@@ -15,7 +15,7 @@ namespace CharsooWebAPI.Services
             {
                 var wc = new WebClient();
                 wc.DownloadString(
-                    $@"https://api.kavenegar.com/v1/{API_KEY}/sms/send.json?receptor={phoneNumber}&message={message}");
+                    $@"https://api.kavenegar.com/v1/{API_KEY}/sms/send.json?receptor={phoneNumber}&sender=10007919676213&message={message}");
             }
             catch (WebException ex)
             {
@@ -42,7 +42,7 @@ namespace CharsooWebAPI.Services
             {
                 var wc = new WebClient();
                 wc.DownloadString(
-                    $@"https://api.kavenegar.com/v1/{API_KEY}/verify/lookup.json?receptor={phoneNumber}&token={vcode}&template={template}");
+                    $@"https://api.kavenegar.com/v1/{API_KEY}/verify/lookup.json?receptor={phoneNumber}&sender=10007919676213&token={vcode}&template={template}");
             }
             catch (WebException ex)
             {
