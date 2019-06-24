@@ -37,6 +37,8 @@ namespace CharsooWebAPI.Controllers
 
             AddNewPuzzlesCommand(clientLastCmdTime, commands);
 
+            AddNewRewardsCommand(clientLastCmdTime, commands,playerID);
+
             string content = commands.ToString(Formatting.None);
 
             return Ok(content);
@@ -80,6 +82,29 @@ namespace CharsooWebAPI.Controllers
             {
                 ["Command"] = "AddCategories",
                 ["Data"] = new JArray(newCategories.Select(JObject.FromObject))
+            });
+        }
+
+        #endregion
+
+        #region AddNewRewardCommand
+
+        private void AddNewRewardsCommand(DateTime clientLastCmdTime, JArray commands,int playerID)
+        {
+            List<Reward> newRewards = new List<Reward>();
+
+            var playerRewards = _db.Rewards.Where(r => r.PlayerID == playerID);
+            if (!playerRewards.Any())
+                return;
+            newRewards.AddRange(playerRewards.Where(r => r.LastUpdate > clientLastCmdTime).ToList());
+
+
+            if (newRewards.Count <= 0) return;
+
+            commands.Add(new JObject
+            {
+                ["Command"] = "GiveReward",
+                ["Data"] = new JArray(newRewards.Select(JObject.FromObject))
             });
         }
 

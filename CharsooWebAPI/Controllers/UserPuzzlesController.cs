@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -64,7 +65,6 @@ namespace CharsooWebAPI.Controllers
 
             return Ok("Success");
         }
-
 
         [ResponseType(typeof(OutData)), HttpPost, Route("Sync")]
         public IHttpActionResult Sync(InData inData)
@@ -146,7 +146,7 @@ namespace CharsooWebAPI.Controllers
                         outData.UpdatedPuzzles.Add(new OutData.PuzzleUpdate
                         {
                             ServerID = p.ID,
-                            CategoryName = p.CategoryID.HasValue ? 
+                            CategoryName = p.CategoryID.HasValue ?
                             (p.CategoryID == 2050 ? "-" : _db.Categories.FirstOrDefault(c => c.ID == p.CategoryID.Value)?.Name) : "",
                             Rate = rates.Any() ? (int?)Math.Round(rates.Average(pr => pr.Rate)) : null,
                             PlayCount = count,
@@ -175,7 +175,40 @@ namespace CharsooWebAPI.Controllers
             return Ok(onlinePuzzle);
         }
 
+        [ResponseType(typeof(List<UserPuzzle>))]
+        public IHttpActionResult GetNewPuzzles()
+        {
+            List<UserPuzzle> newPuzzles = new List<UserPuzzle>();
+            newPuzzles.AddRange(_db.UserPuzzles.Where(p => p.CategoryID == null));
+            return Ok(newPuzzles);
+        }
 
+        [ResponseType(typeof(string)), HttpPost, Route("SetCategory")]
+        public IHttpActionResult SetCategory(int puzzleID, int category)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            UserPuzzle userPuzzle = _db.UserPuzzles.FirstOrDefault(p => p.ID == puzzleID);
+            if (userPuzzle == null) return BadRequest();
+            userPuzzle.CategoryID = category;
+            userPuzzle.LastUpdate = DateTime.Now;
+
+            _db.Entry(userPuzzle).State = EntityState.Modified;
+
+            try
+            {
+                _db.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return Ok("Failed");
+            }
+
+            return Ok("Success");
+        }
 
         #endregion
 

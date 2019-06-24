@@ -6,10 +6,13 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using CharsooWebAPI.Models;
+using Newtonsoft.Json.Linq;
 
 namespace CharsooWebAPI.Controllers
 {
@@ -88,6 +91,40 @@ namespace CharsooWebAPI.Controllers
                     throw;
                 }
             }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        private static string _token = "587ebf53ba61daa4124a9ccc2e780b64d0aecc73";
+        private static string _title = "بروز رسانی جدول";
+        private static string _message = "جدول ها بروزرسانی شد";
+        private static string _pushUrl = "http://api.pushe.co/v2/messaging/notifications/";
+
+        [ResponseType(typeof(void)), HttpGet, Route("Send")]
+        public async Task<IHttpActionResult> SendNotification()
+        {
+            HttpClient client = new HttpClient();
+
+            var content = JObject.FromObject(new
+            {
+                app_ids = new string[] {"com.Matarsak.charsoo"},
+/*                filters=JObject.FromObject(new
+                {
+                   device_id=new string[]
+                   {
+                       "pid_db03-3d22-31"
+                   } 
+                }),*/
+                data = JObject.FromObject(new
+                {
+                    title = _title,
+                    content = _message,
+                    image= "http://charsoogame.ir/Img/Notif_Icon.jpg"
+                })
+            });
+            var stringContent = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token",_token);
+            var response = await client.PostAsync(_pushUrl, stringContent);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
