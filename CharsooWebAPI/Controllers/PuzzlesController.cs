@@ -107,23 +107,23 @@ namespace CharsooWebAPI.Controllers
 
             var content = JObject.FromObject(new
             {
-                app_ids = new string[] {"com.Matarsak.charsoo"},
-/*                filters=JObject.FromObject(new
-                {
-                   device_id=new string[]
-                   {
-                       "pid_db03-3d22-31"
-                   } 
-                }),*/
+                app_ids = new string[] { "com.Matarsak.charsoo" },
+                /*                filters=JObject.FromObject(new
+                                {
+                                   device_id=new string[]
+                                   {
+                                       "pid_db03-3d22-31"
+                                   } 
+                                }),*/
                 data = JObject.FromObject(new
                 {
                     title = _title,
                     content = _message,
-                    image= "http://charsoogame.ir/Img/Notif_Icon.jpg"
+                    image = "http://charsoogame.ir/Img/Notif_Icon.jpg"
                 })
             });
             var stringContent = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token",_token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", _token);
             var response = await client.PostAsync(_pushUrl, stringContent);
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -144,6 +144,7 @@ namespace CharsooWebAPI.Controllers
 
             puzzle.LastUpdate = DateTime.Now;
             db.Puzzles.Add(puzzle);
+
             db.SaveChanges();
 
             return Ok(puzzle);
@@ -164,7 +165,7 @@ namespace CharsooWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            if(puzzlePlayer.Split('/').Length<2)
+            if (puzzlePlayer.Split('/').Length < 2)
                 return Ok("Fail");
 
 
@@ -216,7 +217,7 @@ namespace CharsooWebAPI.Controllers
             {
                 return BadRequest();
             }
-            puzzle.LastUpdate =DateTime.Now;
+            puzzle.LastUpdate = DateTime.Now;
             db.Entry(puzzle).State = EntityState.Modified;
 
             try
@@ -258,7 +259,7 @@ namespace CharsooWebAPI.Controllers
         {
             return db.Puzzles.Count(e => e.ID == id) > 0;
         }
-        
+
         #endregion
 
     }

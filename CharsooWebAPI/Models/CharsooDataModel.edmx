@@ -4,287 +4,287 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CharsooModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Categories">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Icon" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
-          <Property Name="Visit" Type="bit" Nullable="false" />
-          <Property Name="Row" Type="int" Nullable="false" />
-          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-          <Property Name="ParentID" Type="int" />
-          <Property Name="PrerequisiteID" Type="int" />
-        </EntityType>
-        <EntityType Name="LogIn">
-          <Key>
-            <PropertyRef Name="PlayerID" />
-            <PropertyRef Name="DeviceID" />
-            <PropertyRef Name="LoginTime" />
-          </Key>
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-          <Property Name="DeviceID" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="LoginTime" Type="datetime" Nullable="false" />
-          <Property Name="Latitude" Type="float" Nullable="false" />
-          <Property Name="Longitude" Type="float" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PlayerInfo">
-          <Key>
-            <PropertyRef Name="PlayerID" />
-          </Key>
-          <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Avatar" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="Telephone" Type="nvarchar(max)" />
-          <Property Name="Email" Type="nvarchar(max)" />
-          <Property Name="CoinCount" Type="int" Nullable="false" />
-          <Property Name="Dirty" Type="bit" Nullable="false" />
-          <Property Name="HasDubler" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PlayPuzzles">
-          <Key>
-            <PropertyRef Name="PlayerID" />
-            <PropertyRef Name="PuzzleID" />
-            <PropertyRef Name="Time" />
-          </Key>
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-          <Property Name="PuzzleID" Type="int" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="MoveCount" Type="int" Nullable="false" />
-          <Property Name="HintCount1" Type="int" Nullable="false" />
-          <Property Name="HintCount2" Type="int" Nullable="false" />
-          <Property Name="HintCount3" Type="int" Nullable="false" />
-          <Property Name="Success" Type="bit" Nullable="false" />
-          <Property Name="Duration" Type="int" Nullable="false" />
-          <Property Name="Dirty" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Purchases">
-          <Key>
-            <PropertyRef Name="PlayerID" />
-            <PropertyRef Name="PurchaseID" />
-          </Key>
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-          <Property Name="PurchaseID" Type="nchar" MaxLength="15" Nullable="false" />
-          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-          <Property Name="Dirty" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PushIDs">
-          <Key>
-            <PropertyRef Name="PID" />
-          </Key>
-          <Property Name="PID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PuzzleRate">
-          <Key>
-            <PropertyRef Name="PuzzleID" />
-            <PropertyRef Name="PlayerID" />
-          </Key>
-          <Property Name="PuzzleID" Type="int" Nullable="false" />
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-          <Property Name="Rate" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Puzzles">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Clue" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Content" Type="nvarchar" MaxLength="1500" Nullable="false" />
-          <Property Name="Row" Type="int" Nullable="false" />
-          <Property Name="Solved" Type="bit" Nullable="false" />
-          <Property Name="Paid" Type="bit" Nullable="false" />
-          <Property Name="CategoryID" Type="int" />
-          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-          <Property Name="CreatorID" Type="int" />
-          <Property Name="Rate" Type="int" />
-          <Property Name="PlayCount" Type="int" />
-        </EntityType>
-        <EntityType Name="Rewards">
-          <Key>
-            <PropertyRef Name="RewardID" />
-          </Key>
-          <Property Name="RewardID" Type="int" Nullable="false" />
-          <Property Name="PlayerID" Type="int" Nullable="false" />
-          <Property Name="RewardAmount" Type="int" Nullable="false" />
-          <Property Name="RewardCouse" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserPuzzles">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ClientID" Type="int" Nullable="false" />
-          <Property Name="CreatorID" Type="int" Nullable="false" />
-          <Property Name="Clue" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Content" Type="nvarchar" MaxLength="1500" Nullable="false" />
-          <Property Name="CategoryID" Type="int" />
-          <Property Name="LastUpdate" Type="datetime" Nullable="false" />
-          <Property Name="PlayCount" Type="int" />
-        </EntityType>
-        <Association Name="FK_CategoryParent">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Categories1">
-              <PropertyRef Name="ParentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CategoryPrerequisite">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Categories1">
-              <PropertyRef Name="PrerequisiteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CategoryPuzzle">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Puzzles" Type="Self.Puzzles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Puzzles">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CategoryUserPuzzle">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="UserPuzzles" Type="Self.UserPuzzles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserPuzzles">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LogIn_PlayerInfo">
-          <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="LogIn" Type="Self.LogIn" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlayerInfo">
-              <PropertyRef Name="PlayerID" />
-            </Principal>
-            <Dependent Role="LogIn">
-              <PropertyRef Name="PlayerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PlayerID">
-          <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1" />
-          <End Role="PuzzleRate" Type="Self.PuzzleRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlayerInfo">
-              <PropertyRef Name="PlayerID" />
-            </Principal>
-            <Dependent Role="PuzzleRate">
-              <PropertyRef Name="PlayerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Purchases_PlayerInfo">
-          <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1" />
-          <End Role="Purchases" Type="Self.Purchases" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlayerInfo">
-              <PropertyRef Name="PlayerID" />
-            </Principal>
-            <Dependent Role="Purchases">
-              <PropertyRef Name="PlayerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PushIDs_PlayerInfo">
-          <End Role="PlayerInfo" Type="Self.PlayerInfo" Multiplicity="1" />
-          <End Role="PushIDs" Type="Self.PushIDs" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PlayerInfo">
-              <PropertyRef Name="PlayerID" />
-            </Principal>
-            <Dependent Role="PushIDs">
-              <PropertyRef Name="PlayerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PuzzleID">
-          <End Role="UserPuzzles" Type="Self.UserPuzzles" Multiplicity="1" />
-          <End Role="PuzzleRate" Type="Self.PuzzleRate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserPuzzles">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PuzzleRate">
-              <PropertyRef Name="PuzzleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="CharsooModelsStoreContainer">
-          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LogIn" EntityType="Self.LogIn" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PlayerInfo" EntityType="Self.PlayerInfo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PlayPuzzles" EntityType="Self.PlayPuzzles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Purchases" EntityType="Self.Purchases" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PushIDs" EntityType="Self.PushIDs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PuzzleRate" EntityType="Self.PuzzleRate" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Puzzles" EntityType="Self.Puzzles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Rewards" EntityType="Self.Rewards" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserPuzzles" EntityType="Self.UserPuzzles" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CategoryParent" Association="Self.FK_CategoryParent">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Categories1" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategoryPrerequisite" Association="Self.FK_CategoryPrerequisite">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Categories1" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategoryPuzzle" Association="Self.FK_CategoryPuzzle">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Puzzles" EntitySet="Puzzles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CategoryUserPuzzle" Association="Self.FK_CategoryUserPuzzle">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="UserPuzzles" EntitySet="UserPuzzles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LogIn_PlayerInfo" Association="Self.FK_LogIn_PlayerInfo">
-            <End Role="PlayerInfo" EntitySet="PlayerInfo" />
-            <End Role="LogIn" EntitySet="LogIn" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PlayerID" Association="Self.FK_PlayerID">
-            <End Role="PlayerInfo" EntitySet="PlayerInfo" />
-            <End Role="PuzzleRate" EntitySet="PuzzleRate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Purchases_PlayerInfo" Association="Self.FK_Purchases_PlayerInfo">
-            <End Role="PlayerInfo" EntitySet="PlayerInfo" />
-            <End Role="Purchases" EntitySet="Purchases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PushIDs_PlayerInfo" Association="Self.FK_PushIDs_PlayerInfo">
-            <End Role="PlayerInfo" EntitySet="PlayerInfo" />
-            <End Role="PushIDs" EntitySet="PushIDs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PuzzleID" Association="Self.FK_PuzzleID">
-            <End Role="UserPuzzles" EntitySet="UserPuzzles" />
-            <End Role="PuzzleRate" EntitySet="PuzzleRate" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="CharsooModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CharsooModelsStoreContainer">
+    <EntitySet Name="Categories" EntityType="CharsooModels.Store.Categories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Puzzles" EntityType="CharsooModels.Store.Puzzles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlayerInfoes" EntityType="CharsooModels.Store.PlayerInfoes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LogIns" EntityType="CharsooModels.Store.LogIns" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Purchases" EntityType="CharsooModels.Store.Purchases" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserPuzzles" EntityType="CharsooModels.Store.UserPuzzles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlayPuzzles" EntityType="CharsooModels.Store.PlayPuzzles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PuzzleRates" EntityType="CharsooModels.Store.PuzzleRates" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PushIDs" EntityType="CharsooModels.Store.PushIDs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rewards" EntityType="CharsooModels.Store.Rewards" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_CategoryParent" Association="CharsooModels.Store.FK_CategoryParent">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Categories1" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategoryPrerequisite" Association="CharsooModels.Store.FK_CategoryPrerequisite">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Categories1" EntitySet="Categories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategoryPuzzle" Association="CharsooModels.Store.FK_CategoryPuzzle">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Puzzles" EntitySet="Puzzles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LogIn_PlayerInfo" Association="CharsooModels.Store.FK_LogIn_PlayerInfo">
+      <End Role="PlayerInfo" EntitySet="PlayerInfoes" />
+      <End Role="LogIn" EntitySet="LogIns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Purchases_PlayerInfo" Association="CharsooModels.Store.FK_Purchases_PlayerInfo">
+      <End Role="PlayerInfo" EntitySet="PlayerInfoes" />
+      <End Role="Purchase" EntitySet="Purchases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CategoryUserPuzzle" Association="CharsooModels.Store.FK_CategoryUserPuzzle">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="UserPuzzle" EntitySet="UserPuzzles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlayerID" Association="CharsooModels.Store.FK_PlayerID">
+      <End Role="PlayerInfo" EntitySet="PlayerInfoes" />
+      <End Role="PuzzleRate" EntitySet="PuzzleRates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PuzzleID" Association="CharsooModels.Store.FK_PuzzleID">
+      <End Role="UserPuzzle" EntitySet="UserPuzzles" />
+      <End Role="PuzzleRate" EntitySet="PuzzleRates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PushIDs_PlayerInfo" Association="CharsooModels.Store.FK_PushIDs_PlayerInfo">
+      <End Role="PlayerInfo" EntitySet="PlayerInfoes" />
+      <End Role="PushID" EntitySet="PushIDs" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Icon" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="Visit" Type="bit" Nullable="false" />
+    <Property Name="Row" Type="int" Nullable="false" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+    <Property Name="ParentID" Type="int" Nullable="true" />
+    <Property Name="PrerequisiteID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Puzzles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Clue" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="1500" />
+    <Property Name="Row" Type="int" Nullable="false" />
+    <Property Name="Solved" Type="bit" Nullable="false" />
+    <Property Name="Paid" Type="bit" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="true" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+    <Property Name="CreatorID" Type="int" Nullable="true" />
+    <Property Name="Rate" Type="int" Nullable="true" />
+    <Property Name="PlayCount" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="PlayerInfoes">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+    </Key>
+    <Property Name="PlayerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Avatar" Type="nvarchar" Nullable="false" MaxLength="500" />
+    <Property Name="Telephone" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CoinCount" Type="int" Nullable="false" />
+    <Property Name="Dirty" Type="bit" Nullable="false" />
+    <Property Name="HasDubler" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LogIns">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+      <PropertyRef Name="DeviceID" />
+      <PropertyRef Name="LoginTime" />
+    </Key>
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="DeviceID" Type="varchar" Nullable="false" MaxLength="150" />
+    <Property Name="LoginTime" Type="datetime" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Purchases">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="PurchaseID" Type="nchar" Nullable="false" MaxLength="15" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+    <Property Name="Dirty" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserPuzzles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientID" Type="int" Nullable="false" />
+    <Property Name="CreatorID" Type="int" Nullable="false" />
+    <Property Name="Clue" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="1500" />
+    <Property Name="CategoryID" Type="int" Nullable="true" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+    <Property Name="PlayCount" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="PlayPuzzles">
+    <Key>
+      <PropertyRef Name="PlayerID" />
+      <PropertyRef Name="PuzzleID" />
+      <PropertyRef Name="Time" />
+    </Key>
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="PuzzleID" Type="int" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="MoveCount" Type="int" Nullable="false" />
+    <Property Name="HintCount1" Type="int" Nullable="false" />
+    <Property Name="HintCount2" Type="int" Nullable="false" />
+    <Property Name="HintCount3" Type="int" Nullable="false" />
+    <Property Name="Success" Type="bit" Nullable="false" />
+    <Property Name="Duration" Type="int" Nullable="false" />
+    <Property Name="Dirty" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PuzzleRates">
+    <Key>
+      <PropertyRef Name="PuzzleID" />
+      <PropertyRef Name="PlayerID" />
+    </Key>
+    <Property Name="PuzzleID" Type="int" Nullable="false" />
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PushIDs">
+    <Key>
+      <PropertyRef Name="PID" />
+    </Key>
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="PID" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Rewards">
+    <Key>
+      <PropertyRef Name="RewardID" />
+    </Key>
+    <Property Name="RewardID" Type="int" Nullable="false" />
+    <Property Name="PlayerID" Type="int" Nullable="false" />
+    <Property Name="RewardAmount" Type="int" Nullable="false" />
+    <Property Name="RewardCouse" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="LastUpdate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CategoryParent">
+    <End Role="Categories" Type="CharsooModels.Store.Categories" Multiplicity="0..1" />
+    <End Role="Categories1" Type="CharsooModels.Store.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Categories1">
+        <PropertyRef Name="ParentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategoryPrerequisite">
+    <End Role="Categories" Type="CharsooModels.Store.Categories" Multiplicity="0..1" />
+    <End Role="Categories1" Type="CharsooModels.Store.Categories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Categories1">
+        <PropertyRef Name="PrerequisiteID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategoryPuzzle">
+    <End Role="Categories" Type="CharsooModels.Store.Categories" Multiplicity="0..1" />
+    <End Role="Puzzles" Type="CharsooModels.Store.Puzzles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Puzzles">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LogIn_PlayerInfo">
+    <End Role="PlayerInfo" Type="CharsooModels.Store.PlayerInfoes" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LogIn" Type="CharsooModels.Store.LogIns" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlayerInfo">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="LogIn">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Purchases_PlayerInfo">
+    <End Role="PlayerInfo" Type="CharsooModels.Store.PlayerInfoes" Multiplicity="1" />
+    <End Role="Purchase" Type="CharsooModels.Store.Purchases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlayerInfo">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="Purchase">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CategoryUserPuzzle">
+    <End Role="Category" Type="CharsooModels.Store.Categories" Multiplicity="0..1" />
+    <End Role="UserPuzzle" Type="CharsooModels.Store.UserPuzzles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserPuzzle">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlayerID">
+    <End Role="PlayerInfo" Type="CharsooModels.Store.PlayerInfoes" Multiplicity="1" />
+    <End Role="PuzzleRate" Type="CharsooModels.Store.PuzzleRates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlayerInfo">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="PuzzleRate">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PuzzleID">
+    <End Role="UserPuzzle" Type="CharsooModels.Store.UserPuzzles" Multiplicity="1" />
+    <End Role="PuzzleRate" Type="CharsooModels.Store.PuzzleRates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserPuzzle">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PuzzleRate">
+        <PropertyRef Name="PuzzleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PushIDs_PlayerInfo">
+    <End Role="PlayerInfo" Type="CharsooModels.Store.PlayerInfoes" Multiplicity="1" />
+    <End Role="PushID" Type="CharsooModels.Store.PushIDs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlayerInfo">
+        <PropertyRef Name="PlayerID" />
+      </Principal>
+      <Dependent Role="PushID">
+        <PropertyRef Name="PlayerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CharsooModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -589,136 +589,135 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CharsooModelsStoreContainer" CdmEntityContainer="charsoog_DBEntities">
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="CharsooModels.Category">
-              <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Icon" ColumnName="Icon" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Visit" ColumnName="Visit" />
-                <ScalarProperty Name="Row" ColumnName="Row" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="PrerequisiteID" ColumnName="PrerequisiteID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Puzzles">
-            <EntityTypeMapping TypeName="CharsooModels.Puzzle">
-              <MappingFragment StoreEntitySet="Puzzles">
-                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Clue" ColumnName="Clue" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="Row" ColumnName="Row" />
-                <ScalarProperty Name="Solved" ColumnName="Solved" />
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PlayerInfoes">
-            <EntityTypeMapping TypeName="CharsooModels.PlayerInfo">
-              <MappingFragment StoreEntitySet="PlayerInfo">
-                <ScalarProperty Name="HasDubler" ColumnName="HasDubler" />
-                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
-                <ScalarProperty Name="CoinCount" ColumnName="CoinCount" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
-                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LogIns">
-            <EntityTypeMapping TypeName="CharsooModels.LogIn">
-              <MappingFragment StoreEntitySet="LogIn">
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
-                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Purchases">
-            <EntityTypeMapping TypeName="CharsooModels.Purchase">
-              <MappingFragment StoreEntitySet="Purchases">
-                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserPuzzles">
-            <EntityTypeMapping TypeName="CharsooModels.UserPuzzle">
-              <MappingFragment StoreEntitySet="UserPuzzles">
-                <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
-                <ScalarProperty Name="Clue" ColumnName="Clue" />
-                <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
-                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PlayPuzzles">
-            <EntityTypeMapping TypeName="CharsooModels.PlayPuzzle">
-              <MappingFragment StoreEntitySet="PlayPuzzles">
-                <ScalarProperty Name="Dirty" ColumnName="Dirty" />
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="Success" ColumnName="Success" />
-                <ScalarProperty Name="HintCount3" ColumnName="HintCount3" />
-                <ScalarProperty Name="HintCount2" ColumnName="HintCount2" />
-                <ScalarProperty Name="HintCount1" ColumnName="HintCount1" />
-                <ScalarProperty Name="MoveCount" ColumnName="MoveCount" />
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PuzzleRates">
-            <EntityTypeMapping TypeName="CharsooModels.PuzzleRate">
-              <MappingFragment StoreEntitySet="PuzzleRate">
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-                <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PushIDs">
-            <EntityTypeMapping TypeName="CharsooModels.PushID">
-              <MappingFragment StoreEntitySet="PushIDs">
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Rewards">
-            <EntityTypeMapping TypeName="CharsooModels.Reward">
-              <MappingFragment StoreEntitySet="Rewards">
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="RewardCouse" ColumnName="RewardCouse" />
-                <ScalarProperty Name="RewardAmount" ColumnName="RewardAmount" />
-                <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
-                <ScalarProperty Name="RewardID" ColumnName="RewardID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CharsooModelsStoreContainer" CdmEntityContainer="charsoog_DBEntities">
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.Category)">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Icon" ColumnName="Icon" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Visit" ColumnName="Visit" />
+          <ScalarProperty Name="Row" ColumnName="Row" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="PrerequisiteID" ColumnName="PrerequisiteID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Puzzles">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.Puzzle)">
+        <MappingFragment StoreEntitySet="Puzzles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Clue" ColumnName="Clue" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Row" ColumnName="Row" />
+          <ScalarProperty Name="Solved" ColumnName="Solved" />
+          <ScalarProperty Name="Paid" ColumnName="Paid" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayerInfoes">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.PlayerInfo)">
+        <MappingFragment StoreEntitySet="PlayerInfoes">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CoinCount" ColumnName="CoinCount" />
+          <ScalarProperty Name="Dirty" ColumnName="Dirty" />
+          <ScalarProperty Name="HasDubler" ColumnName="HasDubler" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LogIns">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.LogIn)">
+        <MappingFragment StoreEntitySet="LogIns">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+          <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Purchases">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.Purchase)">
+        <MappingFragment StoreEntitySet="Purchases">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="PurchaseID" ColumnName="PurchaseID" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="Dirty" ColumnName="Dirty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserPuzzles">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.UserPuzzle)">
+        <MappingFragment StoreEntitySet="UserPuzzles">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="Clue" ColumnName="Clue" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+          <ScalarProperty Name="PlayCount" ColumnName="PlayCount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlayPuzzles">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.PlayPuzzle)">
+        <MappingFragment StoreEntitySet="PlayPuzzles">
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="MoveCount" ColumnName="MoveCount" />
+          <ScalarProperty Name="HintCount1" ColumnName="HintCount1" />
+          <ScalarProperty Name="HintCount2" ColumnName="HintCount2" />
+          <ScalarProperty Name="HintCount3" ColumnName="HintCount3" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+          <ScalarProperty Name="Duration" ColumnName="Duration" />
+          <ScalarProperty Name="Dirty" ColumnName="Dirty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PuzzleRates">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.PuzzleRate)">
+        <MappingFragment StoreEntitySet="PuzzleRates">
+          <ScalarProperty Name="PuzzleID" ColumnName="PuzzleID" />
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PushIDs">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.PushID)">
+        <MappingFragment StoreEntitySet="PushIDs">
+          <ScalarProperty Name="PID" ColumnName="PID" />
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rewards">
+      <EntityTypeMapping TypeName="IsTypeOf(CharsooModels.Reward)">
+        <MappingFragment StoreEntitySet="Rewards">
+          <ScalarProperty Name="RewardID" ColumnName="RewardID" />
+          <ScalarProperty Name="PlayerID" ColumnName="PlayerID" />
+          <ScalarProperty Name="RewardAmount" ColumnName="RewardAmount" />
+          <ScalarProperty Name="RewardCouse" ColumnName="RewardCouse" />
+          <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -732,7 +731,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
